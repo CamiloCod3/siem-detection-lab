@@ -1,0 +1,9 @@
+﻿flowchart TD
+    A[Isolated Virtual Switch] --> B[Windows Server / AD DC]
+    A --> C[Windows Client]
+    A --> D[Wazuh SIEM Server]
+    A --> E[Linux/Kali Test VM]
+    B -->|Windows Event Logs + Sysmon| D
+    C -->|Windows Event Logs + Sysmon| D
+    E -->|Controlled test activity| B
+    E -->|Controlled test activity| C

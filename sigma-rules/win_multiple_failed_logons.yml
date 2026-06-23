@@ -1,0 +1,21 @@
+﻿title: Multiple Failed Windows Logons
+id: 33333333-3333-3333-3333-333333333333
+status: experimental
+description: Detects failed Windows logon events. Aggregation should be handled in the SIEM.
+author: SIEM Detection Lab
+date: 2026/06/23
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4625
+  condition: selection
+falsepositives:
+  - Forgotten password
+  - Expired credentials
+  - Misconfigured service account
+level: medium
+tags:
+  - attack.credential_access
+  - attack.t1110
