@@ -1,4 +1,4 @@
-﻿# Windows SIEM Detection Lab
+# Windows SIEM Detection Lab
 
 A hands-on blue team lab project focused on Windows logging, SIEM log collection, detection engineering, and SOC-style incident investigation.
 
@@ -9,6 +9,12 @@ The goal of this project is to build a fully isolated virtual lab where Windows 
 Planning phase.
 
 The lab environment has not been deployed yet.
+
+## Who This Project Is For
+
+This repository is designed both as a student lab guide and as a portfolio project demonstrating practical blue team skills.
+
+Students can use the instructions to understand how the lab should be planned and built step by step. Reviewers and employers can use the repository to evaluate the project scope, safety mindset, documentation quality, and planned technical workflow.
 
 ## Purpose
 
@@ -82,14 +88,13 @@ Additional documentation:
 * [Safety Rules](./docs/safety-rules.md)
 * [Project Roadmap](./docs/project-roadmap.md)
 * [Network Design](./architecture/network-design.md)
-* [School Approval Request](./docs/school-approval-request.md)
 
 ## Repository Structure
 
 ```text
 siem-detection-lab/
 ├── README.md
-├── INSTRUCTIONS.md
+├── Instructions.md
 ├── architecture/
 ├── docs/
 ├── detections/
