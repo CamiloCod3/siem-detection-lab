@@ -22,34 +22,51 @@ Before building the lab, make sure the following requirements are met:
 * No real malware is used.
 * Snapshots are created before testing.
 
-## 3. Required Virtual Machines
+## 3. Lab Machines and Roles
 
-Recommended minimum lab:
+The lab is built from a small number of virtual machines. Each machine has a specific role in the environment.
 
-| Machine        | Purpose                                          |
-| -------------- | ------------------------------------------------ |
-| Windows Server | Domain Controller or Windows log source          |
-| Windows Client | Endpoint for user activity and detection testing |
-| SIEM Server    | Receives and analyzes logs                       |
-| Linux/Kali VM  | Optional controlled test machine                 |
+| VM | Main Role | What It Does | Example IP | Required? |
+| --- | --- | --- | --- | --- |
+| SIEM Server | Central log collection and analysis | Receives logs from Windows machines, stores events, generates alerts, and provides dashboards for investigation. | `10.50.10.10` | Yes |
+| Windows Server | Server log source / optional Domain Controller | Generates Windows server events. Can optionally be configured as an Active Directory Domain Controller for domain logon and account-management detections. | `10.50.10.20` | Yes |
+| Windows Client | Endpoint log source | Simulates a normal user workstation. Used to generate endpoint activity such as logons, PowerShell usage, scheduled tasks, and local admin changes. | `10.50.10.30` | Yes |
+| Linux/Kali VM | Optional test machine | Used only for controlled and approved lab activity, such as validating network visibility or generating harmless test traffic inside the isolated lab. | `10.50.10.40` | Optional |
+
+### How the Machines Work Together
+
+```text
+Windows Server  ---- logs ----\
+                              \
+Windows Client  ---- logs ----->  SIEM Server  ---> dashboards, alerts, investigations
+                              /
+Linux/Kali VM   -- optional --/
+```
+
+The Windows machines act as log sources. The SIEM server is the central system that receives, analyzes, and visualizes the logs. The optional Linux/Kali VM should only be used inside the isolated lab and only for safe, controlled testing.
 
 ## 4. Recommended Network Design
 
 Use a private or internal virtual switch.
 
+The lab machines should be able to communicate with each other, but not with the school production network.
+
+| Network Setting | Recommendation | Reason |
+| --- | --- | --- |
+| Network type | Private/Internal virtual switch | Keeps the lab separated from production networks. |
+| IP range | `10.50.10.0/24` | Private lab-only address range. |
+| Default gateway | None | Prevents the lab from routing traffic outside the isolated network. |
+| DNS | Windows Server if using AD, otherwise manual/static as needed | Keeps name resolution inside the lab. |
+| Internet access | Disabled during the initial phase | Reduces risk and makes isolation easier to validate. |
+
 Example IP plan:
 
-| Machine        | IP Address  |
-| -------------- | ----------- |
-| SIEM Server    | 10.50.10.10 |
-| Windows Server | 10.50.10.20 |
-| Windows Client | 10.50.10.30 |
-| Linux/Kali VM  | 10.50.10.40 |
-
-Gateway: None
-Network type: Private/Internal virtual switch
-
-The lab machines should be able to communicate with each other, but not with the school production network.
+| VM | IP Address | Notes |
+| --- | --- | --- |
+| SIEM Server | `10.50.10.10` | Static IP. Windows agents send logs here. |
+| Windows Server | `10.50.10.20` | Static IP. Can also provide DNS if configured as AD DC. |
+| Windows Client | `10.50.10.30` | Static IP. Endpoint used for user activity simulations. |
+| Linux/Kali VM | `10.50.10.40` | Optional. No access outside the lab network. |
 
 ## 5. Phase 1: Planning
 
@@ -60,7 +77,6 @@ Recommended files to review and update:
 * `docs/safety-rules.md`
 * `docs/project-roadmap.md`
 * `architecture/network-design.md`
-* `docs/school-approval-request.md`
 
 Checklist:
 
@@ -69,7 +85,7 @@ Checklist:
 * [ ] Define what is out of scope
 * [ ] Plan the IP address range
 * [ ] Plan the virtual network type
-* [ ] Request approval if using school infrastructure
+* [ ] Confirm permission and scope before using shared infrastructure
 
 ## 6. Phase 2: Build the Isolated Network
 
@@ -77,13 +93,13 @@ Create an isolated virtual network using your hypervisor.
 
 Safe options:
 
-| Hypervisor         | Recommended Network Type           |
-| ------------------ | ---------------------------------- |
-| Hyper-V            | Private Virtual Switch             |
-| VMware ESXi        | Port Group without physical uplink |
-| Proxmox            | Linux bridge without physical NIC  |
-| VirtualBox         | Internal Network                   |
-| VMware Workstation | Host-only                          |
+| Hypervisor | Recommended Network Type |
+| --- | --- |
+| Hyper-V | Private Virtual Switch |
+| VMware ESXi | Port Group without physical uplink |
+| Proxmox | Linux bridge without physical NIC |
+| VirtualBox | Internal Network |
+| VMware Workstation | Host-only |
 
 Avoid:
 
@@ -113,10 +129,22 @@ ping 10.50.10.10
 
 Deploy the planned virtual machines:
 
+* SIEM Server
 * Windows Server
 * Windows Client
-* SIEM Server
 * Optional Linux/Kali VM
+
+Recommended deployment order:
+
+1. Create the isolated virtual switch.
+2. Deploy the SIEM Server.
+3. Deploy the Windows Server.
+4. Deploy the Windows Client.
+5. Deploy the optional Linux/Kali VM only if needed.
+6. Assign static IP addresses.
+7. Confirm that machines can communicate inside the lab.
+8. Confirm that the lab cannot reach production networks.
+9. Take clean snapshots before testing.
 
 Document:
 
@@ -136,6 +164,8 @@ Install the selected SIEM platform.
 Recommended starting option:
 
 * Wazuh
+
+The SIEM Server should be the central log receiver. Windows machines should send events to this server using agents or supported log forwarding methods.
 
 Document the installation in a setup file, for example:
 
