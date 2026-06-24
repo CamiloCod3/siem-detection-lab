@@ -1,53 +1,109 @@
 ﻿# Windows SIEM Detection Lab
 
-This project documents a fully isolated Windows SIEM Detection Lab for blue team training, detection engineering, Windows logging, and SOC-style investigation practice.
+A hands-on blue team lab project focused on Windows logging, SIEM log collection, detection engineering, and SOC-style incident investigation.
 
-The goal is not only to install a SIEM, but to create repeatable detection scenarios, document logs, write detection rules, trigger alerts, analyze them, and produce investigation notes.
+The goal of this project is to build a fully isolated virtual lab where Windows events can be collected, analyzed, and used to create practical security detections.
 
-## Project Goals
+## Project Status
 
-- Build an isolated virtual lab environment
-- Collect Windows Event Logs and Sysmon telemetry
-- Forward endpoint logs to a SIEM
-- Create and test detection rules
-- Document each detection use case
-- Map detections to MITRE ATT&CK where possible
-- Produce screenshots and sample incident reports
-- Keep the school network completely unaffected
+Planning phase.
 
-## Planned Lab Architecture
+The lab environment has not been deployed yet.
 
-Isolated Virtual Switch / Private Network
+## Purpose
 
-- Windows Server / Domain Controller
-- Windows Client
-- Wazuh SIEM Server
-- Linux/Kali Test VM
+This project is designed to demonstrate practical skills in:
 
-## Suggested Stack
+* Windows Server administration
+* Windows Event Log analysis
+* Sysmon telemetry
+* SIEM log collection
+* Detection engineering
+* Basic SOC investigation workflow
+* Secure lab isolation
+* Technical documentation
 
-- Windows Server
-- Windows Client
-- Wazuh SIEM
-- Wazuh Agent
-- Sysmon
-- Sigma rules
-- Optional Linux/Kali VM for controlled testing
+## Planned Lab Environment
 
-## Detection Use Cases
+The lab will be built using virtual machines connected to an isolated virtual network.
 
-- Failed logon brute force
-- Suspicious PowerShell execution
-- New local administrator user
-- Scheduled task persistence
-- RDP logon activity
-- Security control tampering
-- Suspicious SMB/share access
+Planned components:
 
-## Disclaimer
+* Windows Server
+* Windows Client
+* SIEM Server
+* Optional Linux/Kali test VM
+* Sysmon
+* Wazuh or another SIEM platform
+
+## Planned Architecture
+
+```text
+[Isolated Virtual Switch / Private Network]
+        |
+        ├── Windows Server
+        ├── Windows Client
+        ├── SIEM Server
+        └── Linux/Kali Test VM
+```
+
+The lab must not be connected directly to the school production network.
+
+## Planned Detection Use Cases
+
+The project will include detection scenarios such as:
+
+* Failed Windows logons
+* Suspicious PowerShell execution
+* New local administrator user
+* Scheduled task creation
+* RDP logon activity
+
+Each detection will be documented with:
+
+* Objective
+* Log source
+* Relevant event IDs
+* Detection logic
+* Test procedure
+* Expected result
+* Screenshot of alert
+* False positives
+* Response steps
+
+## How to Follow This Project
+
+If you want to understand or reproduce the lab, start here:
+
+[Lab Instructions](./INSTRUCTIONS.md)
+
+Additional documentation:
+
+* [Safety Rules](./docs/safety-rules.md)
+* [Project Roadmap](./docs/project-roadmap.md)
+* [Network Design](./architecture/network-design.md)
+* [School Approval Request](./docs/school-approval-request.md)
+
+## Repository Structure
+
+```text
+siem-detection-lab/
+├── README.md
+├── INSTRUCTIONS.md
+├── architecture/
+├── docs/
+├── detections/
+├── reports/
+├── screenshots/
+└── scripts/
+```
+
+## Safety Disclaimer
 
 This project is for educational and defensive security training only.
 
-All tests must be performed inside an isolated lab environment with explicit permission from the system owner.
+All testing must be performed inside an approved and isolated lab environment.
 
 Do not run tests against school, company, public, or third-party systems.
+
+Do not publish sensitive information such as passwords, tokens, private keys, internal IP addresses, real usernames, raw production logs, or sensitive screenshots.
