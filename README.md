@@ -75,7 +75,7 @@ Each detection will be documented with:
 
 If you want to understand or reproduce the lab, start here:
 
-[Lab Instructions](./INSTRUCTIONS.md)
+[Lab Instructions](./Instructions.md)
 
 Additional documentation:
 
