@@ -12,9 +12,9 @@ The lab environment has not been deployed yet.
 
 ## Who This Project Is For
 
-This repository is designed both as a student lab guide and as a portfolio project demonstrating practical blue team skills.
+This repository is an independent portfolio project and a practical lab guide for anyone who wants to study Windows logging and detection engineering.
 
-Students can use the instructions to understand how the lab should be planned and built step by step. Reviewers and employers can use the repository to evaluate the project scope, safety mindset, documentation quality, and planned technical workflow.
+Learners can use the instructions to understand how the lab should be planned and built step by step. Reviewers and employers can use the repository to evaluate the project scope, safety mindset, documentation quality, and planned technical workflow.
 
 ## Purpose
 
@@ -53,7 +53,7 @@ Planned components:
         └── Linux/Kali Test VM
 ```
 
-The lab must not be connected directly to the school production network.
+The lab must not be connected directly to the host network or any external or production network.
 
 ## Planned Detection Use Cases
 
@@ -107,8 +107,8 @@ siem-detection-lab/
 
 This project is for educational and defensive security training only.
 
-All testing must be performed inside an approved and isolated lab environment.
+All testing must be performed inside the isolated lab environment.
 
-Do not run tests against school, company, public, or third-party systems.
+Do not run tests against personal, company, public, production, or third-party systems outside the lab.
 
-Do not publish sensitive information such as passwords, tokens, private keys, internal IP addresses, real usernames, raw production logs, or sensitive screenshots.
+Do not publish sensitive information such as passwords, tokens, private keys, real internal IP addresses, real usernames, raw production logs, or sensitive screenshots.
