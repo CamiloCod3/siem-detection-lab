@@ -1,4 +1,4 @@
-﻿# Safety Rules
+# Safety Rules
 
 ## Allowed
 
@@ -11,14 +11,14 @@
 
 ## Not Allowed
 
-- Testing against school production systems
-- Scanning school IP ranges
-- Bridging lab VMs to the school network
+- Testing against systems outside the isolated lab
+- Scanning external, public, or production IP ranges
+- Bridging lab VMs to the host or a production network
 - Running real malware
-- Publishing internal school data
+- Publishing data from real or external environments
 - Publishing credentials, tokens, or private keys
 - Installing agents on non-lab machines
 
 ## GitHub Publishing Rules
 
-Do not publish real usernames, passwords, internal domains, internal school IP addresses, sensitive screenshots, private keys, tokens, or raw event logs from real environments.
+Do not publish real usernames, passwords, internal domains, real internal IP addresses, sensitive screenshots, private keys, tokens, or raw event logs from production or third-party environments.
