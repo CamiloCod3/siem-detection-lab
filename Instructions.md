@@ -2,7 +2,7 @@
 
 This document explains how to build and document the Windows SIEM Detection Lab step by step.
 
-The goal is to make the project understandable for both students who want to reproduce the lab and reviewers who want to understand the technical workflow.
+The goal is to make the project understandable for both learners who want to reproduce the lab and reviewers who want to understand the technical workflow.
 
 ## 1. Project Goal
 
@@ -14,11 +14,11 @@ The lab should collect Windows logs, generate security alerts, and document how 
 
 Before building the lab, make sure the following requirements are met:
 
-* You have permission to use the infrastructure.
+* You own or are authorized to use the infrastructure.
 * The lab network is isolated.
 * No bridged networking is used.
 * No testing is performed against production systems.
-* No school or company systems are scanned.
+* No systems outside the lab are scanned.
 * No real malware is used.
 * Snapshots are created before testing.
 
@@ -31,7 +31,7 @@ The lab is built from a small number of virtual machines. Each machine has a spe
 | SIEM Server | Central log collection and analysis | Receives logs from Windows machines, stores events, generates alerts, and provides dashboards for investigation. | `10.50.10.10` | Yes |
 | Windows Server | Server log source / optional Domain Controller | Generates Windows server events. Can optionally be configured as an Active Directory Domain Controller for domain logon and account-management detections. | `10.50.10.20` | Yes |
 | Windows Client | Endpoint log source | Simulates a normal user workstation. Used to generate endpoint activity such as logons, PowerShell usage, scheduled tasks, and local admin changes. | `10.50.10.30` | Yes |
-| Linux/Kali VM | Optional test machine | Used only for controlled and approved lab activity, such as validating network visibility or generating harmless test traffic inside the isolated lab. | `10.50.10.40` | Optional |
+| Linux/Kali VM | Optional test machine | Used only for controlled lab activity, such as validating network visibility or generating harmless test traffic inside the isolated lab. | `10.50.10.40` | Optional |
 
 ### How the Machines Work Together
 
@@ -49,11 +49,11 @@ The Windows machines act as log sources. The SIEM server is the central system t
 
 Use a private or internal virtual switch.
 
-The lab machines should be able to communicate with each other, but not with the school production network.
+The lab machines should be able to communicate with each other, but not with the host network, the internet, or any external or production network.
 
 | Network Setting | Recommendation | Reason |
 | --- | --- | --- |
-| Network type | Private/Internal virtual switch | Keeps the lab separated from production networks. |
+| Network type | Private/Internal virtual switch | Keeps the lab separated from external and production networks. |
 | IP range | `10.50.10.0/24` | Private lab-only address range. |
 | Default gateway | None | Prevents the lab from routing traffic outside the isolated network. |
 | DNS | Windows Server if using AD, otherwise manual/static as needed | Keeps name resolution inside the lab. |
@@ -85,7 +85,7 @@ Checklist:
 * [ ] Define what is out of scope
 * [ ] Plan the IP address range
 * [ ] Plan the virtual network type
-* [ ] Confirm permission and scope before using shared infrastructure
+* [ ] Confirm ownership, authorization, and scope for all infrastructure used
 
 ## 6. Phase 2: Build the Isolated Network
 
@@ -104,8 +104,8 @@ Safe options:
 Avoid:
 
 * Bridged networking
-* School DHCP
-* School DNS
+* External DHCP
+* External DNS
 * Routing to production networks
 * Shared production VLANs
 
@@ -143,7 +143,7 @@ Recommended deployment order:
 5. Deploy the optional Linux/Kali VM only if needed.
 6. Assign static IP addresses.
 7. Confirm that machines can communicate inside the lab.
-8. Confirm that the lab cannot reach production networks.
+8. Confirm that the lab cannot reach external or production networks.
 9. Take clean snapshots before testing.
 
 Document:
@@ -246,7 +246,7 @@ Examples of safe activities:
 
 Do not use real malware.
 
-Do not attack school systems.
+Do not test or attack systems outside the lab.
 
 Do not scan outside the lab network.
 
@@ -281,7 +281,7 @@ screenshots/
 Before publishing screenshots, remove or hide:
 
 * Real usernames
-* Internal school IP addresses
+* Real internal IP addresses
 * Hostnames if sensitive
 * Tokens
 * Secrets
@@ -299,7 +299,7 @@ The project is considered complete when:
 * At least one alert screenshot is included.
 * At least one incident report is written.
 * The README explains the project clearly.
-* No sensitive school information is published.
+* No sensitive information from external or production environments is published.
 
 ## 15. Recommended Git Workflow
 
@@ -323,7 +323,7 @@ Add suspicious PowerShell investigation report
 Update project roadmap
 ```
 
-## 16. Notes for Students
+## 16. Project Principles
 
 Do not rush directly into testing.
 
